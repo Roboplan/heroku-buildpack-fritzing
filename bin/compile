@@ -1,45 +1,22 @@
 #!/usr/bin/env bash
 set -e
 
-echo "-----> Downloading latest fritzing"
-export PATH="$PATH:test"
-
-
 # Set fritzing download path
-# FRITZING_FILE=fritzing-0.9.2b.linux.AMD64.tar.bz2
-# FRITING_PATH=http://fritzing.org/download/0.9.2b/linux-64bit
-# FRITZING_TARGET_PATH=$2/fritzing
+FRITZING_FILE=fritzing-0.9.2b.linux.AMD64.tar.bz2
+FRITZING_SOURCE=http://fritzing.org/download/0.9.2b/linux-64bit
+FRITZING_TARGET_PATH=$1/vendor/fritzing
 
-# case "$1" in
-# "detect")
-#     echo "build.script"
-#     exit 0
-#     ;;
-# "release")
-#     echo "--- {}"
-#     exit 0
-#     ;;
-# "compile")
-#     echo "-----> Compilation Starting: $*"
-#     echo "-----> Circuito custom build"
-
-#     #
-#     # Install fritzing
-#     #
-#     echo "-----> Downloading fritzing"
-#     wget $FRITING_PATH/$FRITZING_FILE -P $FRITZING_TARGET_PATH -N
-#     echo "-----> Done"
-#     echo "-----> Extracting fritzing"
-#     tar xjvf $FRITZING_TARGET_PATH/$FRITZING_FILE -C $FRITZING_TARGET_PATH --strip-components 1
-#     echo "-----> Done"
-#     echo "-----> Creating a simlink"
-#     ln -s $2/fritzing/Fritzing $2/Fritzing
-#     echo "-----> Compilation Finished"
-#     exit 0
-#     ;;
-# *)
-#     echo "Unknown command: $1"
-#     exit 1
-#     ;;
-# esac
-# }
+#
+# Install fritzing
+#
+echo "-----> Downloading fritzing"
+wget $FRITZING_SOURCE/$FRITZING_FILE -P $FRITZING_TARGET_PATH -N
+echo "-----> Done"
+echo "-----> Extracting fritzing"
+tar xjvf $FRITZING_TARGET_PATH/$FRITZING_FILE -C $FRITZING_TARGET_PATH --strip-components 1
+echo "-----> Done"
+echo "-----> Creating a simlink"
+ln -s ../fritzing/Fritzing $2/vendor/bin/Fritzing
+echo "-----> Done"
+echo "-----> Compilation Finished"
+exit 0
