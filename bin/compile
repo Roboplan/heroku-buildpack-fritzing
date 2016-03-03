@@ -10,19 +10,28 @@ FRITZING_TARGET_PATH=$BUILD_DIR/vendor/fritzing
 # Install fritzing
 #
 echo "-----> Downloading fritzing"
+
 wget $FRITZING_SOURCE/$FRITZING_FILE -P $FRITZING_TARGET_PATH -N
+
 echo "-----> Done"
 echo "-----> Extracting fritzing"
+
 tar xjvf $FRITZING_TARGET_PATH/$FRITZING_FILE -C $FRITZING_TARGET_PATH --strip-components 1
+
 echo "-----> Done"
 echo "-----> Creating a simlink"
+
 ln -s ../fritzing/Fritzing $BUILD_DIR/vendor/bin/Fritzing
+
 echo "-----> Done"
 echo "-----> Creating init scripts"
+
 mkdir -p $BUILD_DIR/.profile.d
 cat <<EOF >$BUILD_DIR/.profile.d/fritzing_defaults.sh
 export PATH="\$HOME/vendor/bin:\$PATH"
 EOF
+
 echo "-----> Done"
+
 echo "-----> Compilation Finished"
 exit 0
