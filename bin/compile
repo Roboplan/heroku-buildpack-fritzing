@@ -4,7 +4,7 @@ set -e
 # Set fritzing download path
 FRITZING_FILE=fritzing-0.9.2b.linux.AMD64.tar.bz2
 FRITZING_SOURCE=http://fritzing.org/download/0.9.2b/linux-64bit
-FRITZING_TARGET_PATH=$1/vendor/fritzing
+FRITZING_TARGET_PATH=$1/vendor/bin/fritzing
 
 #
 # Install fritzing
