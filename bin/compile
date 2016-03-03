@@ -16,7 +16,7 @@ echo "-----> Extracting fritzing"
 tar xjvf $FRITZING_TARGET_PATH/$FRITZING_FILE -C $FRITZING_TARGET_PATH --strip-components 1
 echo "-----> Done"
 echo "-----> Creating a simlink"
-ln -s ../fritzing/Fritzing $2/vendor/bin/Fritzing
+ln -s ../fritzing/Fritzing $1/vendor/bin/Fritzing
 echo "-----> Done"
 echo "-----> Compilation Finished"
 exit 0
