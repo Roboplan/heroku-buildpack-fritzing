@@ -46,5 +46,4 @@ EOF
 
 echo "-----> Done"
 
-echo "-----> Compilation Finished"
 exit 0
