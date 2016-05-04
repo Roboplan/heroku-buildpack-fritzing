@@ -1,37 +1,49 @@
 #!/usr/bin/env bash
 set -e
 BUILD_DIR=$1
+CACHE_DIR=$2/fritzing
+
 # Set fritzing download path
 FRITZING_FILE=fritzing-0.9.2b.linux.AMD64.tar.bz2
 FRITZING_SOURCE=http://fritzing.org/download/0.9.2b/linux-64bit
-FRITZING_TARGET_PATH=$BUILD_DIR/vendor/fritzing
+FRITZING_TARGET_PATH=$BUILD_DIR/.fritzing
 
-#
-# Install fritzing
-#
-echo "-----> Downloading fritzing"
+# Check if fritzing is cached
+echo "-----> Checking cache"
+mkdir -p $CACHE_DIR
 
-wget $FRITZING_SOURCE/$FRITZING_FILE -P $FRITZING_TARGET_PATH -N
+# Check if a cache directory is present
+if [[ -e $CACHE_DIR/$FRITZING_FILE.cache ]]; then
+  echo "-----> Found a cached version, skipping download"
+else
 
-echo "-----> Done"
-echo "-----> Extracting fritzing"
+  # Clean cache
+  rm -rf $CACHE_DIR/*
 
-tar xjvf $FRITZING_TARGET_PATH/$FRITZING_FILE -C $FRITZING_TARGET_PATH --strip-components 1
+  echo "-----> No cached version found, downloading fritzing"
+  wget $FRITZING_SOURCE/$FRITZING_FILE -P $CACHE_DIR -N
+  echo "-----> Done"
 
-echo "-----> Done"
-echo "-----> Creating a simlink"
+  echo "-----> Extracting fritzing"
+  mkdir $CACHE_DIR/$FRITZING_FILE.cache
+  tar xjvf $CACHE_DIR/$FRITZING_FILE -C $CACHE_DIR/$FRITZING_FILE.cache
+  rm -rf $CACHE_DIR/$FRITZING_FILE
+  echo "-----> Done"
+fi
 
-ln -s ../fritzing/Fritzing $BUILD_DIR/vendor/bin/Fritzing
+# Copy the cached version
+cp -r $CACHE_DIR/$FRITZING_FILE.cache/*/ $BUILD_DIR/.fritzing
 
-echo "-----> Done"
+# Create the deploy directory
+mkdir -p $BUILD_DIR/.fritzing
+
 echo "-----> Creating init scripts"
 
 mkdir -p $BUILD_DIR/.profile.d
 cat <<EOF >$BUILD_DIR/.profile.d/fritzing_defaults.sh
-export PATH="\$HOME/vendor/bin:\$PATH"
+export PATH="\$HOME/.fritzing:\$PATH"
 EOF
 
 echo "-----> Done"
 
-echo "-----> Compilation Finished"
 exit 0
