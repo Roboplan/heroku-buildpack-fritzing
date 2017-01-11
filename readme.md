@@ -1,4 +1,4 @@
 heroku-buildpack-fritzing
 =========================
 
-Installs fritzing into `$HOME/.fritzing` and adds it to `$PATH`. 
+Installs fritzing into `$HOME/.fritzing` and adds it to the path. 
