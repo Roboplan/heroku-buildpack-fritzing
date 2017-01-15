@@ -44,6 +44,8 @@ cat <<EOF >$BUILD_DIR/.profile.d/fritzing_defaults.sh
 export PATH="\$HOME/.fritzing:\$PATH"
 EOF
 
+export FRITZING_PARTS_DIR=$BUILD_DIR/.fritzing/fritzing-parts
+
 echo "-----> Done"
 
 exit 0
