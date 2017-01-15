@@ -2,6 +2,7 @@
 set -e
 BUILD_DIR=$1
 CACHE_DIR=$2/fritzing
+ENV_DIR=$3
 
 # Set fritzing download path
 FRITZING_FILE=fritzing-0.9.3b.linux.AMD64.tar.bz2
@@ -44,7 +45,8 @@ cat <<EOF >$BUILD_DIR/.profile.d/fritzing_defaults.sh
 export PATH="\$HOME/.fritzing:\$PATH"
 EOF
 
-export FRITZING_PARTS_DIR=$BUILD_DIR/.fritzing/fritzing-parts
+echo $BUILD_DIR/.fritzing/fritzing-parts > $ENV_DIR/FRITZING_PARTS_DIR
+cat $ENV_DIR/FRITZING_PARTS_DIR
 
 echo "-----> Done"
 
