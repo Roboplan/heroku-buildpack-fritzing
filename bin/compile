@@ -22,6 +22,9 @@ echo "-----> Done"
 # Copy the cached version
 cp -r $CACHE_DIR/$FRITZING_FILE.cache/*/ $BUILD_DIR/.fritzing
 
+# Clean cache dir. we don't store anything in it between builds to keep the slug small
+rm -rf $CACHE_DIR
+
 # Create the deploy directory
 mkdir -p $BUILD_DIR/.fritzing
 
