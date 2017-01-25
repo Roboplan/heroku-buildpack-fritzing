@@ -9,21 +9,31 @@ FRITZING_FILE=fritzing-0.9.2b.linux.AMD64.tar.bz2
 FRITZING_SOURCE=http://fritzing.org/download/0.9.2b/linux-64bit
 FRITZING_TARGET_PATH=$BUILD_DIR/.fritzing
 
-echo "-----> No cached version found, downloading fritzing"
-wget $FRITZING_SOURCE/$FRITZING_FILE -P $CACHE_DIR -N
-echo "-----> Done"
+# Check if fritzing is cached
+echo "-----> Checking cache"
+mkdir -p $CACHE_DIR
 
-echo "-----> Extracting fritzing"
-mkdir $CACHE_DIR/$FRITZING_FILE.cache
-tar xjvf $CACHE_DIR/$FRITZING_FILE -C $CACHE_DIR/$FRITZING_FILE.cache
-rm -rf $CACHE_DIR/$FRITZING_FILE
-echo "-----> Done"
+# Check if a cache directory is present
+if [[ -e $CACHE_DIR/$FRITZING_FILE.cache ]]; then
+  echo "-----> Found a cached version, skipping download"
+else
+
+  # Clean cache
+  rm -rf $CACHE_DIR/*
+
+  echo "-----> No cached version found, downloading fritzing"
+  wget $FRITZING_SOURCE/$FRITZING_FILE -P $CACHE_DIR -N
+  echo "-----> Done"
+
+  echo "-----> Extracting fritzing"
+  mkdir $CACHE_DIR/$FRITZING_FILE.cache
+  tar xjvf $CACHE_DIR/$FRITZING_FILE -C $CACHE_DIR/$FRITZING_FILE.cache
+  rm -rf $CACHE_DIR/$FRITZING_FILE
+  echo "-----> Done"
+fi
 
 # Copy the cached version
 cp -r $CACHE_DIR/$FRITZING_FILE.cache/*/ $BUILD_DIR/.fritzing
-
-# Clean cache dir. we don't store anything in it between builds to keep the slug small
-rm -rf $CACHE_DIR
 
 # Create the deploy directory
 mkdir -p $BUILD_DIR/.fritzing
